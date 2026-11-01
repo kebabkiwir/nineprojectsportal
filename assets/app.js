@@ -214,6 +214,7 @@ async function loadDashboard(user) {
   $('dashboardWelcome').textContent = `Memuat profil untuk ${user.email || 'akun Anda'}...`;
   clearNotice($('profileNotice'));
   try {
+    
     const { data: profile, error } = await supabase
       .from('profiles')
       .select('id,email,display_name,role,created_at')
@@ -225,6 +226,12 @@ async function loadDashboard(user) {
       setNotice($('authNotice'), 'Login berhasil, tetapi profil tidak ditemukan. Pastikan supabase/schema.sql sudah dijalankan dan akun telah terverifikasi.', 'error');
       return;
     }
+    const requestedView = new URLSearchParams(window.location.search).get('view');
+
+if (requestedView !== 'admin') {
+  window.location.replace('./marketplace.html');
+  return;
+}
     currentProfile = profile;
     const isAdmin = profile.role === 'admin' && Boolean(user.email_confirmed_at);
     $('dashboardEyebrow').textContent = isAdmin ? 'AREA ADMIN' : 'AREA PENGGUNA';
@@ -354,12 +361,9 @@ $('logoutButton').addEventListener('click', async () => {
     setNotice($('profileNotice'), `Gagal keluar: ${friendlyError(error)}`, 'error');
     return;
   }
-  currentProfile = null;
-  allUsers = [];
-  $('authForm').reset();
-  setAuthMode('login');
-  showView('auth');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  
+  window.location.replace('./index.html');
+return;
 });
 
 function init() {
