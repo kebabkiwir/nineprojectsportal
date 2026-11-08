@@ -227,6 +227,11 @@ h1, h2, h3 { font-family: var(--site-font-heading); letter-spacing: -.045em; }
 .success-icon { width:66px; height:66px; display:grid; place-items:center; margin:0 auto 15px; border-radius:50%; background:var(--accent-soft); color:var(--site-primary); font-size:30px; }
 .order-success h3 { font-size:25px; margin:0 0 9px; }
 .order-success p { color:var(--text-muted); font-size:12px; line-height:1.6; }
+.qris-demo-box { margin:16px auto; padding:16px; max-width:310px; border:1px solid var(--line); border-radius:14px; background:#fff; color:#14213a; text-align:center; }
+.qris-demo-box img { display:block; width:210px; height:210px; object-fit:contain; margin:10px auto; }
+.qris-demo-box strong { display:block; font-size:20px; color:#14213a; }
+.qris-demo-box small { display:block; color:#526078; font-size:10px; line-height:1.5; }
+.qris-demo-label { display:inline-block; border-radius:999px; padding:5px 9px; margin-top:7px; background:#fff0c2; color:#78520a; font-size:10px; font-weight:900; letter-spacing:.06em; }
 .order-id { display:inline-block; border-radius:8px; background:var(--surface-soft); padding:10px 14px; font-weight:850; font-size:13px; margin:4px 0 18px; }
 .toast { position:fixed; bottom:22px; left:50%; transform:translate(-50%,15px); background:var(--site-secondary); color:white; padding:12px 16px; border-radius:12px; font-size:12px; box-shadow:0 10px 30px #0002; z-index:100; opacity:0; pointer-events:none; transition:.2s; max-width:calc(100% - 30px); text-align:center; }
 .toast.show { opacity:1; transform:translate(-50%,0); }
@@ -332,10 +337,10 @@ h1, h2, h3 { font-family: var(--site-font-heading); letter-spacing: -.045em; }
               </div>
             </div>
             <div class="summary-row total"><span>Total pembayaran</span><strong id="checkoutTotal">Rp0</strong></div>
-            <div class="demo-note">Pemrosesan pembayaran melalui bank, QRIS, atau dompet digital belum diaktifkan pada versi ini.</div>
+            <div class="demo-note">Mode presentasi: QRIS merupakan simulasi. Tidak ada uang sungguhan yang diproses. Jika QRIS dipilih, status pesanan akan otomatis menjadi Lunas (Simulasi).</div>
             <button class="primary-btn" type="submit">Konfirmasi pesanan</button>
           </div>
-          <div class="order-success" id="orderSuccess"><div class="success-icon">✓</div><h3>Konfirmasi berhasil!</h3><p>Ringkasan pesanan telah dibuat. Pemrosesan pembayaran belum diaktifkan.</p><div class="order-id" id="orderId">NP-00001</div><p id="successSummary"></p><button class="primary-btn" id="finishOrder" type="button">Kembali belanja</button></div>
+          <div class="order-success" id="orderSuccess"><div class="success-icon">✓</div><h3 id="successTitle">Konfirmasi berhasil!</h3><p id="successMessage">Ringkasan pesanan telah dibuat.</p><div class="qris-demo-box" id="qrisDemoBox" hidden><small>NINEPROJECTS MARKET · QRIS DEMO</small><img id="qrisDemoImage" alt="QR Code simulasi NineProjects"><strong id="qrisDemoAmount">Rp0</strong><span class="qris-demo-label">SIMULASI — BUKAN PEMBAYARAN AKTIF</span><small style="margin-top:8px">QR ini hanya berisi kode referensi pesanan untuk keperluan demonstrasi, bukan QRIS merchant.</small></div><div class="order-id" id="orderId">NP-00001</div><p id="successSummary"></p><button class="primary-btn" id="finishOrder" type="button">Kembali belanja</button></div>
         </form>
       </div>
     </div>
@@ -563,8 +568,21 @@ $('checkoutForm').addEventListener('submit',async e=>{
     const {error:clearError}=await supabase.from('cart_items').delete().eq('user_id',currentUser.id);
     state.cart={};
     await loadProducts();renderAdminProductList();renderCart();
-    $('orderId').textContent=orderResult?.order_code||orderCode;
-    $('successSummary').textContent=`Total ${formatIDR(orderResult?.total_amount||t.total)} · Metode pembayaran: ${payment} · Status: Menunggu pembayaran.`;
+    const savedTotal=Number(orderResult?.total_amount||t.total);
+    const savedCode=orderResult?.order_code||orderCode;
+    const isQrisDemo=payment==='QRIS';
+    $('orderId').textContent=savedCode;
+    $('successTitle').textContent=isQrisDemo?'Pembayaran simulasi berhasil!':'Pesanan berhasil dibuat!';
+    $('successMessage').textContent=isQrisDemo?'QR Code ditampilkan sebagai bukti visual simulasi. Status pesanan otomatis menjadi Lunas (Simulasi).':'Pesanan tersimpan. Silakan ikuti metode pembayaran yang dipilih.';
+    $('qrisDemoBox').hidden=!isQrisDemo;
+    if(isQrisDemo){
+      const demoPayload=`NINEPROJECTS-DEMO|ORDER:${savedCode}|AMOUNT:${savedTotal}|STATUS:SIMULATED`;
+      $('qrisDemoImage').src=`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(demoPayload)}`;
+      $('qrisDemoAmount').textContent=formatIDR(savedTotal);
+      $('successSummary').textContent=`Total ${formatIDR(savedTotal)} · Metode: QRIS · Status: Lunas (Simulasi). Tidak ada transaksi uang sungguhan.`;
+    }else{
+      $('successSummary').textContent=`Total ${formatIDR(savedTotal)} · Metode pembayaran: ${payment} · Status: Menunggu pembayaran.`;
+    }
     $('checkoutFields').style.display='none';$('orderSuccess').classList.add('open');
     if(clearError)showToast('Pesanan tersimpan, tetapi keranjang database belum berhasil dikosongkan: '+friendlyDbError(clearError));
   }catch(error){
