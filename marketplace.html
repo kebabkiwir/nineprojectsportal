@@ -92,6 +92,7 @@ h1, h2, h3 { font-family: var(--site-font-heading); letter-spacing: -.045em; }
 .hero-brand-panel:first-child { margin-left: 0; }
 .hero-brand-panel:nth-child(even) { background: linear-gradient(150deg,#26394d,#101722); }
 .hero-brand-name { color: white; font-size: clamp(12px,1.45vw,21px); font-weight: 950; letter-spacing: -.05em; text-align: center; margin: 0 0 10px; text-shadow: 0 2px 8px #0009; z-index:1; }
+.hero-brand-image img { width:100%;height:100%;max-height:120px;object-fit:contain; }
 .hero-brand-image { width: 100%; height: 72%; min-height: 125px; display: grid; place-items: center; }
 .hero-brand-image img, .hero-brand-image svg { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 13px 12px #0008); }
 .hero-caption { position: absolute; bottom: 13px; right: 17px; z-index: 3; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: #cbd8e8; }
@@ -136,6 +137,46 @@ h1, h2, h3 { font-family: var(--site-font-heading); letter-spacing: -.045em; }
 .add-btn { width: 100%; border: 1px solid var(--site-primary); border-radius: 10px; background: transparent; color: var(--site-primary); padding: 10px; font-size: 11px; font-weight: 800; transition: .15s; }
 .add-btn:hover { background: var(--site-primary); color: white; }
 .empty-state { display:none; padding: 38px 20px; text-align:center; color: var(--text-muted); border: 1px dashed var(--line); border-radius: 16px; }
+
+.product-stock { display:block; margin-top:5px; color:var(--text-muted); font-size:10px; }
+.product-emoji img { display:block; width:100%; height:100%; object-fit:contain; }
+.add-btn:disabled { opacity:.45; cursor:not-allowed; }
+.admin-products { margin:0 0 24px; padding:20px; border:1px solid #2b4263; border-radius:18px; background:#0f1d31; box-shadow:0 14px 35px #0002; }
+.admin-products[hidden] { display:none; }
+.admin-help { margin:0 0 15px; color:var(--text-muted); font-size:12px; line-height:1.6; }
+.admin-close,.admin-cancel,.admin-edit,.admin-hide { border:1px solid var(--line); border-radius:9px; background:var(--surface-soft); color:var(--site-on-background); padding:9px 12px; font-size:11px; font-weight:750; cursor:pointer; }
+.admin-product-form { padding:15px; border:1px solid var(--line); border-radius:14px; background:#101f32; }
+.admin-form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.admin-field { min-width:0; }
+.admin-field-wide { grid-column:1/-1; }
+.admin-field label { display:block; margin:0 0 6px; color:#dbe6fb; font-size:11px; font-weight:800; }
+.admin-field input:not([type=file]),.admin-field textarea { width:100%; min-height:39px; border:1px solid var(--line); border-radius:9px; background:#0b1728; color:#f5f8ff; padding:10px 11px; font:inherit; font-size:12px; outline:none; }
+.admin-field input[type=file] { width:100%; color:var(--text-muted); font-size:11px; }
+.admin-field textarea { resize:vertical; }
+.image-preview-wrap { display:flex; align-items:center; gap:10px; margin-top:9px; color:var(--text-muted); font-size:11px; }
+.image-preview-wrap img { width:74px; height:74px; object-fit:contain; background:#f0f1f3; border-radius:10px; padding:4px; }
+.image-preview-wrap img[hidden] { display:none; }
+.admin-check { display:flex!important; align-items:center; gap:7px; margin-top:10px!important; font-weight:500!important; color:var(--text-muted)!important; }
+.admin-form-actions { display:flex; gap:9px; margin-top:14px; }
+.admin-save { border:0; border-radius:9px; background:var(--site-primary); color:white; padding:11px 16px; font-size:12px; font-weight:850; cursor:pointer; }
+.admin-list-head { display:flex; justify-content:space-between; align-items:center; gap:10px; margin:20px 0 10px; }
+.admin-list-head h3 { margin:0; font-size:15px; }
+.admin-product-list { display:grid; gap:8px; }
+.admin-product-row { display:grid; grid-template-columns:58px minmax(0,1fr) auto; align-items:center; gap:11px; padding:10px; border:1px solid var(--line); border-radius:12px; background:#101f32; }
+.admin-product-thumb { width:58px; height:58px; display:grid; place-items:center; overflow:hidden; border-radius:9px; background:#f0f1f3; color:#172033; font-size:28px; }
+.admin-product-thumb img { width:100%; height:100%; object-fit:contain; }
+.admin-product-meta { min-width:0; }
+.admin-product-meta strong { display:block; overflow-wrap:anywhere; font-size:12px; }
+.admin-product-meta small { display:block; margin-top:4px; color:var(--text-muted); font-size:10px; line-height:1.4; }
+.admin-product-actions { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:6px; }
+.admin-edit { border-color:#355b9c; background:#182e4d; }
+.admin-hide { border-color:#775443; background:#33271f; }
+.admin-status { display:inline-block; margin-top:4px; color:#9fc5ff; font-size:10px; }
+.admin-footnote { color:var(--text-muted); font-size:10px; line-height:1.5; margin:12px 0 0; }
+.admin-notice { color:#b7d7ff; font-size:11px; margin:12px 0 0; }
+.admin-notice[hidden] { display:none; }
+@media (max-width:720px) { .admin-products {padding:13px;} .admin-form-grid {grid-template-columns:1fr;} .admin-field-wide {grid-column:auto;} .admin-product-row {grid-template-columns:48px minmax(0,1fr);} .admin-product-thumb {width:48px;height:48px;} .admin-product-actions {grid-column:1/-1;justify-content:flex-start;} .admin-form-actions {flex-wrap:wrap;} }
+
 .footer { background: #07111f; color: #dce5ef; padding: 28px 22px; }
 .footer-inner { max-width: 1220px; margin: auto; display:flex; justify-content:space-between; align-items:center; gap:20px; }
 .footer small { color:#adc0b6; font-size:11px; line-height:1.7; }
@@ -202,7 +243,7 @@ h1, h2, h3 { font-family: var(--site-font-heading); letter-spacing: -.045em; }
     <div class="search"><input id="searchInput" type="search" placeholder="Cari produk branded..." aria-label="Cari produk"><button class="search-submit" id="searchButton" type="button" aria-label="Cari">⌕</button></div>
     <div class="actions">
       <button class="cart-btn" id="openCart" type="button">♧ Keranjang <span class="cart-count" id="cartCount">0</span></button>
-      <div class="account-wrap"><button class="account-btn" id="accountButton" type="button" aria-expanded="false" aria-controls="accountMenu"><span class="account-symbol">♙</span><span id="accountGreeting">Halo,<br>NineProjects</span>⌄</button><div class="account-menu" id="accountMenu" hidden><strong id="accountName">Memuat akun...</strong><small id="accountEmail"></small><a href="./index.html?view=admin">Kelola profil akun</a><button id="logoutButton" type="button">Keluar dari akun</button></div></div>
+      <div class="account-wrap"><button class="account-btn" id="accountButton" type="button" aria-expanded="false" aria-controls="accountMenu"><span class="account-symbol">♙</span><span id="accountGreeting">Halo,<br>NineProjects</span>⌄</button><div class="account-menu" id="accountMenu" hidden><strong id="accountName">Memuat akun...</strong><small id="accountEmail"></small><a href="./index.html?view=admin">Kelola profil akun</a><a href="#adminProductPanel" id="manageProductsLink" hidden>Kelola produk</a><button id="logoutButton" type="button">Keluar dari akun</button></div></div>
     </div>
   </header>
   <nav class="market-nav" id="marketNav" aria-label="Navigasi toko">
@@ -232,6 +273,30 @@ h1, h2, h3 { font-family: var(--site-font-heading); letter-spacing: -.045em; }
         <div class="hero-products" id="heroProducts" aria-label="Pilihan produk brand"></div>
         <span class="hero-caption">NineProjects · Brand Collection</span>
       </div>
+    </section>
+    <section class="admin-products" id="adminProductPanel" hidden aria-labelledby="adminProductTitle">
+      <div class="section-head"><div><p class="eyebrow">AKSES KHUSUS ADMIN</p><h2 id="adminProductTitle">Kelola Produk</h2></div><button class="admin-close" id="closeProductAdmin" type="button">Tutup</button></div>
+      <p class="admin-help">Tambah produk baru atau ubah judul, kategori, harga, stok, dan foto. Perubahan tersimpan di Supabase dan akan tampil pada katalog.</p>
+      <form id="productForm" class="admin-product-form">
+        <input id="productId" type="hidden">
+        <div class="admin-form-grid">
+          <div class="admin-field"><label for="productName">Nama / judul produk</label><input id="productName" maxlength="120" required placeholder="Contoh: Essential Oversized Hoodie"></div>
+          <div class="admin-field"><label for="productBrand">Brand</label><input id="productBrand" maxlength="60" placeholder="Contoh: NineProjects"></div>
+          <div class="admin-field"><label for="productCategory">Kategori</label><input id="productCategory" maxlength="60" required placeholder="Contoh: Hoodie & Apparel"></div>
+          <div class="admin-field"><label for="productTag">Label produk</label><input id="productTag" maxlength="35" placeholder="Contoh: Baru"></div>
+          <div class="admin-field"><label for="productPrice">Harga (Rp)</label><input id="productPrice" type="number" min="0" step="1" required placeholder="249000"></div>
+          <div class="admin-field"><label for="productOldPrice">Harga sebelum diskon (opsional)</label><input id="productOldPrice" type="number" min="0" step="1" placeholder="299000"></div>
+          <div class="admin-field"><label for="productStock">Stok barang</label><input id="productStock" type="number" min="0" step="1" required value="0"></div>
+          <div class="admin-field"><label for="productEmoji">Ikon jika belum ada foto</label><input id="productEmoji" maxlength="8" value="📦" placeholder="📦"></div>
+          <div class="admin-field admin-field-wide"><label for="productDescription">Deskripsi produk</label><textarea id="productDescription" maxlength="500" rows="2" placeholder="Deskripsi singkat produk"></textarea></div>
+          <div class="admin-field admin-field-wide"><label for="productImage">Foto produk (JPG, PNG, atau WebP; maks. 5 MB)</label><input id="productImage" type="file" accept="image/jpeg,image/png,image/webp"><div class="image-preview-wrap"><img id="productImagePreview" alt="Pratinjau foto produk" hidden><span id="productImageHint">Belum ada foto baru dipilih.</span></div><label class="admin-check"><input id="clearProductImage" type="checkbox"> Hapus foto produk yang sedang digunakan</label></div>
+        </div>
+        <div class="admin-form-actions"><button class="admin-save" id="saveProductButton" type="submit">Simpan produk</button><button class="admin-cancel" id="resetProductForm" type="button">Kosongkan formulir</button></div>
+        <p class="admin-notice" id="productAdminNotice" role="status" aria-live="polite" hidden></p>
+      </form>
+      <div class="admin-list-head"><h3>Daftar produk</h3><button class="admin-cancel" id="refreshProductList" type="button">Muat ulang</button></div>
+      <div class="admin-product-list" id="adminProductList"><p class="admin-help">Memuat produk...</p></div>
+      <p class="admin-footnote">Produk yang disembunyikan tidak tampil di katalog, tetapi datanya tetap tersimpan. Untuk produk baru, pastikan stok diisi sebelum ditampilkan ke pembeli.</p>
     </section>
     <section id="catalog" aria-labelledby="catalogTitle">
       <div class="section-head"><div><h2 id="catalogTitle">Produk Terbaru</h2></div><p id="catalogSubtitle">Pilihan terbaru dari NineProjects Market</p></div>
@@ -288,39 +353,38 @@ let currentUser = null;
 let currentProfile = null;
 let storeReady = false;
 
-const products = [
-  {id:1,brand:'Nike',name:'Air Jordan 1 Retro High OG',category:'Sepatu',price:2799000,oldPrice:3299000,rating:0,sold:0,tag:'Nike',emoji:'<img class="product-photo" src="data:image/webp;base64,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" alt="Nike Air Jordan 1 Retro High OG" loading="lazy">',bg:'linear-gradient(135deg,#edf0f4,#d6dbe3)',description:'Sneaker basket high-top dengan siluet klasik dan detail panel kontras.'},
-  {id:2,brand:'PUMA',name:'Puma Suede Classic',category:'Sepatu',price:1199000,oldPrice:1399000,rating:0,sold:0,tag:'PUMA',emoji:'<img class="product-photo" src="data:image/webp;base64,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" alt="Puma Suede Classic" loading="lazy">',bg:'linear-gradient(135deg,#edf0f4,#d6dbe3)',description:'Sneaker low-top dengan tampilan suede dan formstrip khas PUMA.'},
-  {id:3,brand:'Baseus',name:'Baseus Wireless Charging Stand',category:'Teknologi',price:699000,oldPrice:799000,rating:0,sold:0,tag:'Baseus',emoji:'<img class="product-photo" src="data:image/webp;base64,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" alt="Baseus Wireless Charging Stand" loading="lazy">',bg:'linear-gradient(135deg,#edf0f4,#d6dbe3)',description:'Aksesori pengisian daya nirkabel dengan desain stand.'},
-  {id:4,brand:'adidas',name:'Adidas Samba OG Black/White Gum',category:'Sepatu',price:1699000,oldPrice:1899000,rating:0,sold:0,tag:'adidas',emoji:'<img class="product-photo" src="data:image/webp;base64,UklGRlIKAABXRUJQVlA4IEYKAACwQACdASoAAQABPqFQoU0mJKO3IreZ8uAUCWlu9H/cQCh4P2xYv2xMwvW7vooyciQg9q5q3mEQa/24yGmg+WP6vFtAuEgti4TiGkGe9C/4bz1D/eLSZU9qi2wcParbs0JyagT6q6bisuGoYkmmhX2tBGFTMg2sBqJY08gZjR1tKjdC3jlvBD5EA+LRTM9flYC8HEs/IWqfkuqw+nt0gW6qfRjM2B60BAX2yzJ5/pEg9c1Z+qbGs1xq0zLHtzjcnZbmS7dOw+9BcnPGW/APgLOvfPWPmDZFRInLN4YEyVvfwj3rHeWgUiSd+PBN9iZUwdY3lia9Uqj78et4at6H4hUhjdTLpXyAQHBx5q1gZ+XjfObN7DmlryQU3P93HZDYhROWJtze3xDyVQNWQ+4Ai4mkxc2XeecIYQbcq1iFXjnTYXGAEIY1NZvJieRHXBnH3OQSmFvtlXVW8yauDgGxdLnZfNlm9BwqZH4QWJ2fCcor1eyClOWNQJO89QmniwqY/FcNuM5jUBFeE/mj8L+Wdj4Cab2BXs9pPOFYCkK8zMXBD+b+vAT0y385fK5CRG477d+5MKrqISosQiHV/sljDuMlmfcV/nIcKX4CmchBUyQ1AIrXdaVo5GyOtHQthtg5Tk3Cv1ZqwK4jdAuR1rHVTdrI9WYMpwG8vNyA2Ez246oHlq7hEeplCjbSm1VcQEIAAP743VbKAIAzuhet5cd8rCqka+3+XcQ6LOSHRi6/w5lrUgo4deiR7ZcXJKYmJkBd7hAAAZpOQ8xWy5lEKZAAakiZC3AZ/zyfEHXD79i+v+24JICX6PlBNtk+8AADxp/BMlNRe51ej77D9C2p5g2klMf3dK8ObFRoaz0DxYjSg9PA1N6S5Ij37IOnKi4oy9+78I9cycuEwDof1iIzcXxrkruLdFCZBlmsZyzC/j3xxb16y8Ebb8+oDR+FxqlJQ4dMdfyeJcocWi/zNCFS5vbFwQRqzXm9fme92UU8x6OlAA3fFnKX+9O8h0Q7IqB8EYret6+Upb36a/Ver/i1v11yDjKOTu6AvoWENX/iBqwND0DMpAvJSOgAKQ5a4RiY6HoPM1iSqu7s/OEiwzMiuPwxtqDZ/zD0jEcqbHmCOAQVauvNkRU1enigF6SwR4D3QC2wXTlCl71yVaTSJQdksrEeP4YZprtNYHFUB1cWLKKgn48sucnsHiCYyTWNfQmnFmxYb4UWxuF8egwvxl9O87p9d80fiv9kXV5S3k+YKKosjEiumKbtF9pZvi3/KQHhVlw9s9MXbuObTrsJeDI4bEiy9wgRkm7FasxFWENQbPlepyGTDnW5I/TBvEyB+TxC336H5cPgmtp3bf0Kk4bdwgwdbbGATXj/QG6jH+hRqBdCcEcryNS/QLDiZiG7XluOZ+j28oIm6KkmvsCDQ6RbOlT24V/oE1WoUwDE8Zbpm6ZUx+8XghbT0OYfjjheLbf70j8B90oHX+NL4YN7avGzMFlyV5KXPfYN2mTdAP2Xz2Ns2lfWZB2ITGmInL8Owa6cIluy4wvkhs3BY/Tk1FRYqcEOU2gjzPDUG3Kuo9ZX4vlCEksrpZHF735DIBcAIcbe0h+mvgIhctT6d2LYAwROF94jYLlUm48NMC+AYm4/ss3A26ICkL8W6PXsTEfKHb+hFwhOAszq4PX9xrrp9DNWyTNZ9n9eQIWwF22Ajf6tq0OP7nZ3iEAuNj/apmfQf/swNeW9rDhQJHpDhF0gCvNA7NFMkCenjGRqSM63E5D4Gk1SlsVTGoLOZeu8ktznuccR3ksGJU3R1O768Z+TfJAJkVp8QNXpO6T03ZlK8aah/fy2GLBjaJPrpXDKhgypbggoW4YMdbMxKBITriEtlUdsOgqHqrR7e8CgX7Ou3B+DzpNtn7n9rG3YbB/zbmGFGP+gs7NbXngvz43xCQeE0dq8/M8GWHp16tqrqU6mJnZUzh7h+v6A+xGhE+amN2ykM52OtP0FShZ0zDmRDfkoB7mbKUa4U62DmlvrSQny/5xZIc0AuaNjdW5+iKrcRNYzlTSyYJrsrudDlPMVF12l80scVt/GilH8U8xNsAhy/1C4vuMaTmx6PGzxHdiDw2FIFMEncDrNX8AW/yusAXn+VudxnRtkzax3++Yx/070aFl8nRlH0u+DPfE0XKcNEw7WuKV5EXwcVO+JTo0jBnLPafhxmwDEXijqmJIZeevd8Mbn5FDc6t7k4oVYafHM0trph+LGtMZJ6AqheNvmMWn+4O7b2D2kWbC6TE0nj7JsScCq7y50c1qbBjypqsR7WGqxxMhVPUYOQjktuQo6nite+HjDn0uZYcDnlA7TcLYBVBhmqNiBUJEjurD1lGy2GCAoqN7WNV/bq2W43vtavBYLqF4Qc8cg2SM14Evcj/4X8xNMfVAnAAFxX4Yahsn34uJ5s70e2NYLXnHVoxHQm3nYGo1sFvwSnRzPyEu0Jl68V0K/V7CW6c01Eo2guk5d8qF6AYsOvRKbBbKfAhZnE9b4VQ3EJ1rZZ1cXJDwFFS6eisb0EGrTgk6wFGwKJZlixqXNR7dL9X6uPWhYr6SoI87foiLAZuRD5GDnUx0xqV83pJ0XgqfOMjUjluWLD1c1GtkAwPTy4+KLQaogkVK9Vy55FxNAigf2q4cCLYE432bIi8vsylA7afvdZiIzpx8kImh7JU2BuGvADOqxANeq0TClySm9n+EFzb1SiIIeiot8fkoPGWL+NcUpDdr3z+xUd1V/210HW/4AvBsulsa9JctnDR7csVXT+2ud8rj6mb6tLooIzhUtDeknub2AMByFgPeEYGfAGQEw2loojfPNmhdAA0uVCsYwmVb+j2WeEcERO/MycsXPhhu+IifGGnFa1xBnxApO8C1l483zqHdPghvW4uLTm+IaoYkl2Ka9J8GWoRBodeRhzFd0JwxQu7q/J+AbyMFRLUFyerqntqXT8C7P2ES3GvsrTy/MTg90DrWKIA77uNWFqxOdnxlolZ6N9bdv8NUFUJr8r9D+TS6Uu27fbQvM7Z5kTVCCOZIhJxsDGbDkIUmfm9XG70mkAuEDseq+ScpHPex5EDbK8hClMeLPG/BA3lRu4I5KkIl8b40ZYQdauapBZJJY1cVw8zeDOzAfW+5eJmlRRClHXYMA1j3WwvrGWcJl2JwedEE5+LYFkEXooDWA3MdW8tyI588OzbkMaQ3tJoxUp74Wy4b+KU6Q5CXR5eQ1+h8MRMyrMK/lzhqcACroQQh4HfQiCWI1LMtDUcBvqfXOJAO2jcaI40+Fh5iexvQeDEZkurlhRLGN2RhBlaYbqKMRjw7jwIPCt+5PmpOG91s5ZMnJkTJ7jb4K7Z9bcnNqzQk73+H0FwrmE2XNpLR2Ai9HWR+Q7LKSe7mmQPZu6ge84Oue1cam+d/st6fpe4pH3YDIWxWAtttFYhneAOV5BDuhtUoaWJ01xOxFvWQABJPgBiuri1uqrMA3y9zWcizsDwMRk5Z1n5I2UW4sErQqxNDaKkAAAAAAAA==" alt="adidas Samba OG" loading="lazy">',bg:'linear-gradient(135deg,#edf0f4,#d6dbe3)',description:'Sneaker low-top bergaya klasik dengan tiga garis khas adidas.'},
-  {id:5,brand:'Nike',name:'Nike Heritage Backpack 25L',category:'Tas',price:549000,oldPrice:649000,rating:0,sold:0,tag:'Nike',emoji:'<svg viewBox="0 0 220 220" role="img" aria-label="Ilustrasi ransel hitam"><defs><linearGradient id="bag" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#30343a"/><stop offset="1" stop-color="#090b0e"/></linearGradient></defs><path d="M72 50c0-21 14-36 38-36s38 15 38 36" fill="none" stroke="#171a1e" stroke-width="13"/><path d="M66 53c-17 9-25 25-27 50l-8 76c-2 20 8 30 28 30h102c20 0 30-10 28-30l-8-76c-2-25-10-41-27-50-23 17-65 17-88 0z" fill="url(#bag)" stroke="#080a0c" stroke-width="5"/><path d="M66 104c0-17 10-27 26-27h36c16 0 26 10 26 27v63H66z" fill="#171b20" stroke="#555a60" stroke-width="3"/><path d="M87 137c24 1 42-7 60-22-12 20-30 32-57 33 8-3 13-6 17-10z" fill="#f2f4f6"/><path d="M47 88l-10 93m136-93l10 93" stroke="#777d83" stroke-width="4" opacity=".55"/><path d="M95 48h30" stroke="#aeb4ba" stroke-width="3" stroke-linecap="round"/></svg>',bg:'#f0f1f3',description:'Ransel harian bergaya sporty untuk aktivitas dan perjalanan.'},
-  {id:6,brand:'G-Shock',name:'G-Shock Digital DW-5600BB-1DR',category:'Jam Tangan',price:1399000,oldPrice:1599000,rating:0,sold:0,tag:'G-Shock',emoji:'<svg viewBox="0 0 220 220" role="img" aria-label="Ilustrasi jam digital hitam"><defs><linearGradient id="watch" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#34383d"/><stop offset="1" stop-color="#080a0d"/></linearGradient></defs><path d="M78 5h64l10 57H68zM68 158h84l-10 57H78z" fill="#15181c" stroke="#060708" stroke-width="5"/><path d="M80 16h60m-66 18h72m-76 18h80m-74 112h68m-72 18h76m-72 18h68" stroke="#777d84" stroke-width="3" opacity=".45"/><rect x="34" y="50" width="152" height="122" rx="27" fill="url(#watch)" stroke="#050607" stroke-width="7"/><rect x="53" y="70" width="114" height="80" rx="7" fill="#aab5a8" stroke="#07090b" stroke-width="6"/><rect x="61" y="78" width="98" height="64" rx="3" fill="#c8d0bd"/><text x="110" y="117" text-anchor="middle" font-size="34" font-family="monospace" font-weight="bold" fill="#172019">10:08</text><text x="110" y="133" text-anchor="middle" font-size="8" font-family="sans-serif" fill="#273229">SU 6-30</text><path d="M25 82h10m-10 50h10m150-50h10m-10 50h10" stroke="#858b91" stroke-width="6" stroke-linecap="round"/></svg>',bg:'#f0f1f3',description:'Jam digital sporty dengan tampilan layar klasik dan desain tangguh.'},
-  {id:7,name:'Speaker Pocket One',category:'Teknologi',price:159000,oldPrice:189000,rating:4.7,sold:58,tag:'Pilihan',emoji:'🔊',bg:'linear-gradient(135deg,#d8e3d5,#9fbc9b)',description:'Suara ringkas untuk menemani waktu santai.'},
-  {id:8,name:'Bantal Duduk Awan',category:'Rumah',price:89000,oldPrice:109000,rating:4.5,sold:42,tag:'Nyaman',emoji:'🛋️',bg:'linear-gradient(135deg,#e4dceb,#c8b7d8)',description:'Tambahan nyaman untuk ruang belajar.'},
-  {id:9,name:'Jam Digital Tempo',category:'Gaya hidup',price:119000,oldPrice:149000,rating:4.6,sold:76,tag:'Populer',emoji:'⌚',bg:'linear-gradient(135deg,#d8dfe9,#aab8d0)',description:'Tampilan simpel untuk menemani aktivitas.'},
-  {id:10,name:'Stand Laptop Lipat',category:'Teknologi',price:99000,oldPrice:129000,rating:4.8,sold:102,tag:'Favorit',emoji:'💻',bg:'linear-gradient(135deg,#ebdfca,#c6b18e)',description:'Membantu posisi laptop lebih nyaman.'},
-  {id:11,name:'Set Alat Tulis Kumo',category:'Gaya hidup',price:39000,oldPrice:49000,rating:4.6,sold:147,tag:'Hemat',emoji:'✏️',bg:'linear-gradient(135deg,#f1e5b6,#decf8a)',description:'Perlengkapan sederhana untuk ide baru.'},
-  {id:12,name: 'Dompet Kartu Loka',category: 'Aksesori',price: 69000,oldPrice: 85000,rating: 0,sold: 55,tag: 'Baru',emoji: '👛',bg: 'linear-gradient(135deg,#f0d6c8,#d4a48d)',description: 'Dompet kartu praktis dengan bentuk tipis.'},
-  {id:13,brand:'NineProjects',name:'Hoodie Oversize Prostreet Berserk PROSTREET',category:'Hoodie & Apparel',price:249000,oldPrice:299000,rating:0,sold:0,tag:'NEW ARRIVAL',emoji:'<img class="product-photo" src="https://prostreet.id/wp-content/uploads/2026/06/2-3-510x510.jpg" alt="Hoodie hitam" loading="lazy">',bg:'#eeeeee',description:'Hoodie hitam dengan desain minimalis dan tampilan kasual.'},
-  {id: 14,brand: 'NineProjects',name: 'Carhartt B01 Loose Fit Double Knee Pants Brown',category: 'Hoodie & Apparel',price: 1685000,oldPrice: 1795000,rating: 4.9,sold: 900,tag: 'APPAREL',emoji: '<img class="product-photo"src="https://images.tokopedia.net/img/cache/700/VqbcmM/2024/11/5/849fbedf-9804-40aa-ad05-d9c9b9c9b7f0.jpg.webp">',bg: 'linear-gradient(135deg,#dce7f2,#a9bfd6)',description: 'Celana baggy dengan potongan longgar untuk gaya kasual sehari-hari.'},
-  {id: 15,brand: 'NineProjects',name: 'Premium Essential Plain T-Shirt',category: 'Hoodie & Apparel',price: 119000,oldPrice: 149000,rating: 4.7,sold: 100000,tag: 'BASIC ESSENTIAL',emoji: '👕',bg: 'linear-gradient(135deg,#ececec,#cfd4dc)',description: 'Kaos polos dengan desain simpel yang mudah dipadukan dengan berbagai outfit.'},
-  {id: 16,brand: 'NineProjects',name: 'Everyday Crew Socks',category: 'Hoodie & Apparel',price: 39000,oldPrice: 49000,rating: 4.5,sold: 5000,tag: 'DAILY WEAR',emoji: '🧦',bg: 'linear-gradient(135deg,#e8e9f0,#c8cedb)',description: 'Kaos kaki model crew untuk melengkapi outfit dan aktivitas harian.'}
-];
-const categories = ['Semua Produk','Sepatu','Aksesori','Elektronik','Hoodie & Apparel','Tas','Lifestyle','Jam Tangan','Topi','Perawatan Pribadi'];
+let products = [];
+let categories = ['Semua Produk'];
 const state = {category:'Semua Produk',search:'',sort:'featured',cart:{}};
 const formatIDR = n => new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(n);
 const $ = id => document.getElementById(id);
 function escapeHTML(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function showToast(message){const toast=$('toast');toast.textContent=message;toast.classList.add('show');clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>toast.classList.remove('show'),2300);}
+function productArtwork(p){
+  if(p.image_url) return `<img src="${escapeHTML(p.image_url)}" alt="${escapeHTML(p.name)}" loading="lazy">`;
+  return escapeHTML(p.emoji || '📦');
+}
+function refreshCategories(){
+  const names=[...new Set(products.filter(p=>p.active).map(p=>p.category).filter(Boolean))];
+  categories=['Semua Produk',...names];
+  if(!categories.includes(state.category)) state.category='Semua Produk';
+}
 function renderCategories(){ $('categoryRow').innerHTML=categories.map(category=>`<button class="category ${state.category===category?'active':''}" type="button" data-category="${escapeHTML(category)}">${escapeHTML(category)}</button>`).join(''); }
 function categoryMatches(product){const c=state.category;if(c==='Semua Produk')return true;if(c==='Elektronik')return product.category==='Teknologi';if(c==='Lifestyle')return product.category==='Gaya hidup';return product.category===c;}
 function renderNav(){document.querySelectorAll('#marketNav button').forEach(button=>{button.classList.toggle('active',button.hasAttribute('data-home')?state.category==='Semua Produk'&&state.search==='':button.dataset.category===state.category);});}
-function filteredProducts(){let items=products.filter(p=>categoryMatches(p)&&(p.name+' '+(p.brand||'')+' '+p.category+' '+p.description).toLowerCase().includes(state.search.toLowerCase()));if(state.sort==='price-low')items.sort((a,b)=>a.price-b.price);if(state.sort==='price-high')items.sort((a,b)=>b.price-a.price);if(state.sort==='rating')items.sort((a,b)=>b.rating-a.rating);return items;}
-function renderHeroProducts(){$('heroProducts').innerHTML=products.slice(0,4).map(p=>'<div class="hero-brand-panel"><div class="hero-brand-name">'+escapeHTML(p.brand||p.name.split(' ')[0])+'</div><div class="hero-brand-image">'+p.emoji+'</div></div>').join('');}
-function renderProducts(){const items=filteredProducts();$('productGrid').innerHTML=items.map(p=>`<article class="product-card"><div class="product-art" style="background:${p.bg}"><span class="product-label">${escapeHTML(p.tag)}</span><span class="product-emoji" aria-hidden="true">${p.emoji}</span></div><div class="product-info"><div class="product-category">${escapeHTML(p.category)}</div><h3>${escapeHTML(p.name)}</h3><p class="product-description">${escapeHTML(p.description)}</p><div class="product-meta"><div><div class="price">${formatIDR(p.price)}</div><div class="old-price">${formatIDR(p.oldPrice)}</div></div><span class="rating">Belum ada ulasan</span></div><button class="add-btn" type="button" data-add="${p.id}">＋ Tambah ke keranjang</button></div></article>`).join('');$('productCount').textContent=`Menampilkan ${items.length} dari ${products.length} produk`;$('emptyState').style.display=items.length?'none':'block';$('productGrid').style.display=items.length?'grid':'none';}
+function filteredProducts(){let items=products.filter(p=>p.active&&categoryMatches(p)&&(p.name+' '+(p.brand||'')+' '+p.category+' '+(p.description||'')).toLowerCase().includes(state.search.toLowerCase()));if(state.sort==='price-low')items.sort((a,b)=>a.price-b.price);if(state.sort==='price-high')items.sort((a,b)=>b.price-a.price);return items;}
+function renderHeroProducts(){const items=products.filter(p=>p.active).slice(0,4);$('heroProducts').innerHTML=items.map(p=>'<div class="hero-brand-panel"><div class="hero-brand-name">'+escapeHTML(p.brand||p.name.split(' ')[0])+'</div><div class="hero-brand-image">'+productArtwork(p)+'</div></div>').join('');}
+function renderProducts(){const items=filteredProducts();$('productGrid').innerHTML=items.map(p=>`<article class="product-card"><div class="product-art" style="background:#f0f1f3"><span class="product-label">${escapeHTML(p.tag||p.brand||'Produk')}</span><span class="product-emoji" aria-hidden="true">${productArtwork(p)}</span></div><div class="product-info"><div class="product-category">${escapeHTML(p.category)}</div><h3>${escapeHTML(p.name)}</h3><p class="product-description">${escapeHTML(p.description||'')}</p><div class="product-meta"><div><div class="price">${formatIDR(p.price)}</div>${p.old_price?`<div class="old-price">${formatIDR(p.old_price)}</div>`:''}<span class="product-stock">Stok: ${Number(p.stock)||0}</span></div><span class="rating">${p.stock>0?'Tersedia':'Stok habis'}</span></div><button class="add-btn" type="button" data-add="${p.id}" ${p.stock<=0?'disabled':''}>${p.stock>0?'＋ Tambah ke keranjang':'Stok habis'}</button></div></article>`).join('');$('productCount').textContent=`Menampilkan ${items.length} dari ${products.filter(p=>p.active).length} produk`;$('emptyState').style.display=items.length?'none':'block';$('productGrid').style.display=items.length?'grid':'none';}
+async function loadProducts(){
+  const {data,error}=await supabase.from('products').select('id,brand,name,category,description,price,old_price,stock,image_url,emoji,tag,active,created_at,updated_at').order('created_at',{ascending:false});
+  if(error) throw error;
+  products=data||[];
+  refreshCategories();
+  renderCategories();renderNav();renderHeroProducts();renderProducts();
+}
 function getCartItems(){return Object.entries(state.cart).map(([id,qty])=>({product:products.find(p=>p.id===Number(id)),qty})).filter(item=>item.product&&item.qty>0);}
 function totals(){const items=getCartItems();const subtotal=items.reduce((sum,item)=>sum+item.product.price*item.qty,0);const shipping=items.length?10000:0;return {items,subtotal,shipping,total:subtotal+shipping,count:items.reduce((s,i)=>s+i.qty,0)};}
-function renderCart(){const t=totals();$('cartCount').textContent=t.count;$('cartSubtotal').textContent=formatIDR(t.subtotal);$('cartShipping').textContent=formatIDR(t.shipping);$('cartTotal').textContent=formatIDR(t.total);$('checkoutTotal').textContent=formatIDR(t.total);$('startCheckout').disabled=!t.count;if(!t.items.length){$('cartItems').innerHTML='<div class="cart-empty"><span class="empty-bag">🛍️</span><strong>Keranjang masih kosong</strong><p>Tambahkan produk yang kamu suka dari katalog.</p></div>';return;}$('cartItems').innerHTML=t.items.map(({product:p,qty})=>`<div class="cart-item"><div class="cart-thumb" style="background:${p.bg}">${p.emoji}</div><div><h3>${escapeHTML(p.name)}</h3><small>${formatIDR(p.price)}</small><div class="qty"><button type="button" data-qty="${p.id}" data-delta="-1" aria-label="Kurangi jumlah">−</button><span>${qty}</span><button type="button" data-qty="${p.id}" data-delta="1" aria-label="Tambah jumlah">＋</button></div></div><div><strong style="font-size:11px">${formatIDR(p.price*qty)}</strong><button class="remove-btn" type="button" data-remove="${p.id}">Hapus</button></div></div>`).join('');}
+function renderCart(){const t=totals();$('cartCount').textContent=t.count;$('cartSubtotal').textContent=formatIDR(t.subtotal);$('cartShipping').textContent=formatIDR(t.shipping);$('cartTotal').textContent=formatIDR(t.total);$('checkoutTotal').textContent=formatIDR(t.total);$('startCheckout').disabled=!t.count;if(!t.items.length){$('cartItems').innerHTML='<div class="cart-empty"><span class="empty-bag">🛍️</span><strong>Keranjang masih kosong</strong><p>Tambahkan produk yang kamu suka dari katalog.</p></div>';return;}$('cartItems').innerHTML=t.items.map(({product:p,qty})=>`<div class="cart-item"><div class="cart-thumb" style="background:#f0f1f3"><span class="product-emoji">${productArtwork(p)}</span></div><div><h3>${escapeHTML(p.name)}</h3><small>${formatIDR(p.price)}</small><div class="qty"><button type="button" data-qty="${p.id}" data-delta="-1" aria-label="Kurangi jumlah">−</button><span>${qty}</span><button type="button" data-qty="${p.id}" data-delta="1" aria-label="Tambah jumlah">＋</button></div></div><div><strong style="font-size:11px">${formatIDR(p.price*qty)}</strong><button class="remove-btn" type="button" data-remove="${p.id}">Hapus</button></div></div>`).join('');}
 function friendlyDbError(error){const message=error?.message||'Kesalahan database tidak diketahui.';if(/row-level security|permission denied|not allowed/i.test(message))return 'Akses database ditolak. Periksa RLS/policy tabel cart_items atau orders untuk user yang sedang login.';if(/duplicate key|on conflict/i.test(message))return 'Kunci unik user_id dan product_id pada cart_items perlu diperiksa.';return message;}
 async function loadAccount(){
   const {data:{user},error:userError}=await supabase.auth.getUser();
@@ -333,6 +397,7 @@ async function loadAccount(){
   $('accountName').textContent=displayName;
   $('accountEmail').textContent=user.email||'';
   $('accountGreeting').innerHTML='Halo,<br>'+escapeHTML(displayName);
+  $('manageProductsLink').hidden = profile?.role !== 'admin';
 }
 async function loadCartFromDatabase(){
   const {data,error}=await supabase.from('cart_items').select('product_id,quantity').eq('user_id',currentUser.id);
@@ -352,15 +417,95 @@ async function saveCartQuantity(productId,quantity){
   }
 }
 function closeAccountMenu(){ $('accountMenu').hidden=true;$('accountButton').setAttribute('aria-expanded','false'); }
+
+function setProductNotice(message){const el=$('productAdminNotice');el.textContent=message;el.hidden=!message;}
+function resetProductForm(){
+  $('productForm').reset();$('productId').value='';$('productStock').value='0';$('productEmoji').value='📦';
+  $('productImagePreview').hidden=true;$('productImagePreview').removeAttribute('src');$('productImageHint').textContent='Belum ada foto baru dipilih.';
+  $('clearProductImage').checked=false;$('saveProductButton').textContent='Simpan produk';setProductNotice('');
+}
+function renderAdminProductList(){
+  if(currentProfile?.role!=='admin') return;
+  $('adminProductList').innerHTML=products.length?products.map(p=>`<div class="admin-product-row"><div class="admin-product-thumb">${productArtwork(p)}</div><div class="admin-product-meta"><strong>${escapeHTML(p.name)}</strong><small>${escapeHTML(p.category)} · ${formatIDR(p.price)} · Stok ${Number(p.stock)||0}</small><span class="admin-status">${p.active?'Ditampilkan di katalog':'Disembunyikan'}</span></div><div class="admin-product-actions"><button class="admin-edit" type="button" data-edit-product="${p.id}">Edit</button><button class="admin-hide" type="button" data-toggle-product="${p.id}">${p.active?'Sembunyikan':'Tampilkan'}</button></div></div>`).join(''):'<p class="admin-help">Belum ada produk. Gunakan formulir di atas untuk menambahkan produk pertama.</p>';
+}
+function openProductAdmin(){
+  if(currentProfile?.role!=='admin'){showToast('Menu ini hanya untuk akun Admin.');return;}
+  $('adminProductPanel').hidden=false;renderAdminProductList();$('adminProductPanel').scrollIntoView({behavior:'smooth',block:'start'});closeAccountMenu();
+}
+function fillProductForm(id){
+  const p=products.find(item=>item.id===Number(id));if(!p)return;
+  $('productId').value=p.id;$('productName').value=p.name||'';$('productBrand').value=p.brand||'';$('productCategory').value=p.category||'';
+  $('productTag').value=p.tag||'';$('productPrice').value=p.price;$('productOldPrice').value=p.old_price??'';$('productStock').value=p.stock??0;
+  $('productEmoji').value=p.emoji||'📦';$('productDescription').value=p.description||'';$('productImage').value='';$('clearProductImage').checked=false;
+  if(p.image_url){$('productImagePreview').src=p.image_url;$('productImagePreview').hidden=false;$('productImageHint').textContent='Foto saat ini. Pilih foto baru untuk menggantinya.';}else{$('productImagePreview').hidden=true;$('productImageHint').textContent='Produk belum memiliki foto.';}
+  $('saveProductButton').textContent='Simpan perubahan';setProductNotice('Mengubah produk: '+p.name);$('productForm').scrollIntoView({behavior:'smooth',block:'center'});
+}
+async function uploadProductImage(file){
+  const allowed={'image/jpeg':'jpg','image/png':'png','image/webp':'webp'};
+  if(!allowed[file.type]) throw new Error('Format foto harus JPG, PNG, atau WebP.');
+  if(file.size>5*1024*1024) throw new Error('Ukuran foto maksimal 5 MB.');
+  const path=`${currentUser.id}/product-${Date.now()}-${crypto.randomUUID()}.${allowed[file.type]}`;
+  const {error}=await supabase.storage.from('product-images').upload(path,file,{cacheControl:'3600',contentType:file.type,upsert:false});
+  if(error) throw error;
+  const {data}=supabase.storage.from('product-images').getPublicUrl(path);
+  return data.publicUrl;
+}
+function productImagePath(url){
+  const prefix=`${SUPABASE_URL}/storage/v1/object/public/product-images/`;
+  if(!url||!url.startsWith(prefix))return null;
+  try{return decodeURIComponent(url.slice(prefix.length));}catch{return null;}
+}
+async function removeProductImage(url){const path=productImagePath(url);if(path){const {error}=await supabase.storage.from('product-images').remove([path]);if(error)console.warn('Foto lama tidak dapat dihapus:',error.message);}}
+async function saveProduct(event){
+  event.preventDefault();
+  if(currentProfile?.role!=='admin')return showToast('Akses Admin diperlukan.');
+  const id=$('productId').value?Number($('productId').value):null;
+  const previous=id?products.find(p=>p.id===id):null;
+  const payload={
+    name:$('productName').value.trim(),brand:$('productBrand').value.trim(),category:$('productCategory').value.trim(),
+    tag:$('productTag').value.trim(),description:$('productDescription').value.trim(),price:Number($('productPrice').value),
+    old_price:$('productOldPrice').value===''?null:Number($('productOldPrice').value),stock:Number($('productStock').value),
+    emoji:$('productEmoji').value.trim()||'📦',active:previous?previous.active:true
+  };
+  if(!payload.name||!payload.category||!Number.isSafeInteger(payload.price)||payload.price<0||!Number.isInteger(payload.stock)||payload.stock<0||(payload.old_price!==null&&(!Number.isSafeInteger(payload.old_price)||payload.old_price<0))){setProductNotice('Periksa kembali nama, kategori, harga, dan stok.');return;}
+  const button=$('saveProductButton');button.disabled=true;button.textContent='Menyimpan...';
+  let uploadedUrl=null;
+  try{
+    const file=$('productImage').files[0];
+    if(file){uploadedUrl=await uploadProductImage(file);payload.image_url=uploadedUrl;}
+    else if($('clearProductImage').checked) payload.image_url=null;
+    else if(previous) payload.image_url=previous.image_url;
+    const response=id
+      ? await supabase.from('products').update(payload).eq('id',id)
+      : await supabase.from('products').insert(payload);
+    if(response.error)throw response.error;
+    if(previous&&previous.image_url&&(uploadedUrl||$('clearProductImage').checked))await removeProductImage(previous.image_url);
+    resetProductForm();await loadProducts();renderAdminProductList();
+    showToast(id?'Produk berhasil diperbarui.':'Produk baru berhasil ditambahkan.');
+  }catch(error){
+    if(uploadedUrl)await removeProductImage(uploadedUrl);
+    setProductNotice('Gagal menyimpan produk: '+(error.message||error));
+  }finally{button.disabled=false;if($('productId').value)button.textContent='Simpan perubahan';else button.textContent='Simpan produk';}
+}
+async function toggleProductActive(id){
+  if(currentProfile?.role!=='admin')return;
+  const p=products.find(item=>item.id===Number(id));if(!p)return;
+  const {error}=await supabase.from('products').update({active:!p.active}).eq('id',p.id);
+  if(error){showToast('Gagal mengubah status: '+error.message);return;}
+  await loadProducts();renderAdminProductList();showToast(p.active?'Produk disembunyikan dari katalog.':'Produk ditampilkan kembali.');
+}
+
 async function initializeStore(){
   try{
     const {data:{session},error}=await supabase.auth.getSession();
     if(error)throw error;
     if(!session){window.location.replace('./index.html');return;}
     await loadAccount();
+    await loadProducts();
     await loadCartFromDatabase();
     storeReady=true;
-    renderCategories();renderNav();renderHeroProducts();renderProducts();renderCart();
+    renderCart();
+    if(currentProfile?.role==='admin') renderAdminProductList();
   }catch(error){
     console.error('NineProjects Market initialization:',error);
     showToast('Tidak bisa memuat akun/keranjang: '+friendlyDbError(error));
@@ -374,7 +519,7 @@ function openCart(){ $('overlay').classList.add('open');$('cartDrawer').classLis
 function closeCart(){ $('overlay').classList.remove('open');$('cartDrawer').classList.remove('open');$('cartDrawer').setAttribute('aria-hidden','true'); }
 function openCheckout(){if(!totals().count)return;closeCart();$('checkoutFields').style.display='block';$('orderSuccess').classList.remove('open');$('checkoutModal').classList.add('open');$('checkoutTotal').textContent=formatIDR(totals().total);}
 function closeCheckout(){ $('checkoutModal').classList.remove('open'); }
-async function addProduct(id){if(!storeReady)return showToast('Akun masih dimuat. Coba lagi sebentar.');const next=(state.cart[id]||0)+1;try{await saveCartQuantity(id,next);state.cart[id]=next;renderCart();showToast('Produk tersimpan di keranjang akunmu.');}catch(error){showToast('Gagal menyimpan keranjang: '+friendlyDbError(error));}}
+async function addProduct(id){if(!storeReady)return showToast('Akun masih dimuat. Coba lagi sebentar.');const p=products.find(item=>item.id===Number(id));if(!p||!p.active)return;if((state.cart[id]||0)+1>p.stock)return showToast('Jumlah melebihi stok yang tersedia.');const next=(state.cart[id]||0)+1;try{await saveCartQuantity(id,next);state.cart[id]=next;renderCart();showToast('Produk tersimpan di keranjang akunmu.');}catch(error){showToast('Gagal menyimpan keranjang: '+friendlyDbError(error));}}
 $('categoryRow').addEventListener('click',e=>{const button=e.target.closest('[data-category]');if(!button)return;state.category=button.dataset.category;renderCategories();renderNav();renderProducts();});
 $('marketNav').addEventListener('click',e=>{const button=e.target.closest('button');if(!button)return;if(button.hasAttribute('data-home')){state.category='Semua Produk';state.search='';$('searchInput').value='';}else{state.category=button.dataset.category;}renderCategories();renderNav();renderProducts();});
 $('productGrid').addEventListener('click',e=>{const button=e.target.closest('[data-add]');if(button)addProduct(Number(button.dataset.add));});
@@ -382,7 +527,7 @@ $('searchInput').addEventListener('input',e=>{state.search=e.target.value;render
 $('searchButton').addEventListener('click',()=>{state.search=$('searchInput').value;renderProducts();$('catalog').scrollIntoView({behavior:'smooth'});});
 $('sortSelect').addEventListener('change',e=>{state.sort=e.target.value;renderProducts();});
 $('openCart').addEventListener('click',openCart);$('closeCart').addEventListener('click',closeCart);$('overlay').addEventListener('click',closeCart);$('startCheckout').addEventListener('click',openCheckout);$('closeCheckout').addEventListener('click',closeCheckout);
-$('cartItems').addEventListener('click',async e=>{const qty=e.target.closest('[data-qty]');const remove=e.target.closest('[data-remove]');const id=qty?Number(qty.dataset.qty):remove?Number(remove.dataset.remove):null;if(id===null)return;const next=remove?0:(state.cart[id]||0)+Number(qty.dataset.delta);try{await saveCartQuantity(id,next);if(next<=0)delete state.cart[id];else state.cart[id]=next;renderCart();}catch(error){showToast('Perubahan keranjang gagal: '+friendlyDbError(error));}});
+$('cartItems').addEventListener('click',async e=>{const qty=e.target.closest('[data-qty]');const remove=e.target.closest('[data-remove]');const id=qty?Number(qty.dataset.qty):remove?Number(remove.dataset.remove):null;if(id===null)return;const next=remove?0:(state.cart[id]||0)+Number(qty.dataset.delta);const p=products.find(item=>item.id===id);if(qty&&Number(qty.dataset.delta)>0&&next>(p?.stock||0))return showToast('Jumlah melebihi stok yang tersedia.');try{await saveCartQuantity(id,next);if(next<=0)delete state.cart[id];else state.cart[id]=next;renderCart();}catch(error){showToast('Perubahan keranjang gagal: '+friendlyDbError(error));}});
 $('checkoutForm').addEventListener('submit',async e=>{
   e.preventDefault();
   const t=totals();
@@ -405,12 +550,13 @@ $('checkoutForm').addEventListener('submit',async e=>{
     items:t.items.map(({product,qty})=>({product_id:product.id,brand:product.brand||null,name:product.name,category:product.category,unit_price:product.price,quantity:qty,line_total:product.price*qty}))
   };
   try{
-    const {error}=await supabase.from('orders').insert(orderPayload);
+    const {data:orderResult,error}=await supabase.rpc('place_order_with_stock',{p_order:orderPayload});
     if(error)throw error;
     const {error:clearError}=await supabase.from('cart_items').delete().eq('user_id',currentUser.id);
-    state.cart={};renderCart();
-    $('orderId').textContent=orderCode;
-    $('successSummary').textContent=`Total ${formatIDR(t.total)} · Metode pembayaran: ${payment} · Status: Menunggu pembayaran.`;
+    state.cart={};
+    await loadProducts();renderAdminProductList();renderCart();
+    $('orderId').textContent=orderResult?.order_code||orderCode;
+    $('successSummary').textContent=`Total ${formatIDR(orderResult?.total_amount||t.total)} · Metode pembayaran: ${payment} · Status: Menunggu pembayaran.`;
     $('checkoutFields').style.display='none';$('orderSuccess').classList.add('open');
     if(clearError)showToast('Pesanan tersimpan, tetapi keranjang database belum berhasil dikosongkan: '+friendlyDbError(clearError));
   }catch(error){
@@ -420,12 +566,20 @@ $('checkoutForm').addEventListener('submit',async e=>{
   }
 });
         $('finishOrder').addEventListener('click',()=>{closeCheckout();$('checkoutForm').reset();$('checkoutFields').style.display='block';$('orderSuccess').classList.remove('open');showToast('Terima kasih telah berbelanja di NineProjects Market!');});
+$('manageProductsLink').addEventListener('click',e=>{e.preventDefault();openProductAdmin();});
+$('closeProductAdmin').addEventListener('click',()=>{$('adminProductPanel').hidden=true;});
+$('productForm').addEventListener('submit',saveProduct);
+$('resetProductForm').addEventListener('click',resetProductForm);
+$('refreshProductList').addEventListener('click',async()=>{try{await loadProducts();renderAdminProductList();showToast('Daftar produk diperbarui.');}catch(error){showToast('Gagal memuat produk: '+error.message);}});
+$('adminProductList').addEventListener('click',e=>{const edit=e.target.closest('[data-edit-product]');const toggle=e.target.closest('[data-toggle-product]');if(edit)fillProductForm(edit.dataset.editProduct);if(toggle)toggleProductActive(toggle.dataset.toggleProduct);});
+$('productImage').addEventListener('change',()=>{const file=$('productImage').files[0];if(!file)return;$('clearProductImage').checked=false;$('productImagePreview').src=URL.createObjectURL(file);$('productImagePreview').hidden=false;$('productImageHint').textContent=file.name;});
+$('clearProductImage').addEventListener('change',e=>{if(e.target.checked){$('productImage').value='';$('productImagePreview').hidden=true;$('productImageHint').textContent='Foto akan dihapus saat disimpan.';}});
 $('shopNow').addEventListener('click',()=>$('catalog').scrollIntoView({behavior:'smooth'}));$('homeButton').addEventListener('click',()=>{state.category='Semua Produk';state.search='';$('searchInput').value='';$('sortSelect').value='featured';state.sort='featured';renderCategories();renderNav();renderProducts();window.scrollTo({top:0,behavior:'smooth'});});
 $('accountButton').addEventListener('click',()=>{const menu=$('accountMenu');menu.hidden=!menu.hidden;$('accountButton').setAttribute('aria-expanded',String(!menu.hidden));});
 document.addEventListener('click',e=>{if(!e.target.closest('.account-wrap'))closeAccountMenu();});
 $('logoutButton').addEventListener('click',async()=>{const button=$('logoutButton');button.disabled=true;button.textContent='Keluar...';try{const {error}=await supabase.auth.signOut();if(error)throw error;state.cart={};currentUser=null;window.location.replace('./index.html');}catch(error){showToast('Logout gagal: '+friendlyDbError(error));button.disabled=false;button.textContent='Keluar dari akun';}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeCart();closeCheckout();}});
-renderCategories();renderNav();renderHeroProducts();renderProducts();renderCart();
+renderCart();
 initializeStore();
 </script>
 </body>
