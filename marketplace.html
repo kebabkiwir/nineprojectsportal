@@ -59,6 +59,8 @@ button { cursor: pointer; }
 .account-menu strong { font-size: 13px; margin-bottom: 4px; }
 .account-menu small { color: #aab8d2; font-size: 11px; margin-bottom: 12px; }
 .account-menu a, .account-menu button { display: block; width: 100%; padding: 10px 11px; border: 1px solid #2b3b58; border-radius: 9px; color: #eef3ff; background: #142842; text-align: left; text-decoration: none; font-size: 12px; margin-top: 7px; }
+/* Jangan biarkan display:block pada link mengalahkan atribut hidden. */
+.account-menu a[hidden], .account-menu button[hidden], #adminProductPanel[hidden] { display: none !important; }
 .account-menu button { background: #39232a; border-color: #70404c; color: #ffdce2; }
 .market-nav { max-width: 1480px; margin: 0 auto; padding: 0 22px; min-height: 62px; display: flex; align-items: center; gap: 30px; border-bottom: 1px solid #17283d; }
 .market-nav button { height: 62px; padding: 0 2px; color: #c8d3e2; background: transparent; border: 0; border-bottom: 3px solid transparent; font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif; font-size: 14px; font-weight: 650; letter-spacing: -.012em; white-space: nowrap; }
@@ -399,7 +401,10 @@ async function loadAccount(){
   $('accountGreeting').innerHTML='Halo,<br>'+escapeHTML(displayName);
   const adminAccess = isAdminAccount();
   $('accountRoleLabel').textContent = adminAccess ? 'Akses Admin aktif' : 'Akses Pengguna';
-  $('manageProductsLink').hidden = !adminAccess;
+  const manageLink = $('manageProductsLink');
+  manageLink.hidden = !adminAccess;
+  manageLink.style.display = adminAccess ? 'block' : 'none';
+  if (!adminAccess) $('adminProductPanel').hidden = true;
 }
 async function loadCartFromDatabase(){
   const {data,error}=await supabase.from('cart_items').select('product_id,quantity').eq('user_id',currentUser.id);
