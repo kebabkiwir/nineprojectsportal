@@ -243,7 +243,7 @@ h1, h2, h3 { font-family: var(--site-font-heading); letter-spacing: -.045em; }
     <div class="search"><input id="searchInput" type="search" placeholder="Cari produk branded..." aria-label="Cari produk"><button class="search-submit" id="searchButton" type="button" aria-label="Cari">⌕</button></div>
     <div class="actions">
       <button class="cart-btn" id="openCart" type="button">♧ Keranjang <span class="cart-count" id="cartCount">0</span></button>
-      <div class="account-wrap"><button class="account-btn" id="accountButton" type="button" aria-expanded="false" aria-controls="accountMenu"><span class="account-symbol">♙</span><span id="accountGreeting">Halo,<br>NineProjects</span>⌄</button><div class="account-menu" id="accountMenu" hidden><strong id="accountName">Memuat akun...</strong><small id="accountEmail"></small><a href="./index.html?view=admin">Kelola profil akun</a><a href="#adminProductPanel" id="manageProductsLink" hidden>Kelola produk</a><button id="logoutButton" type="button">Keluar dari akun</button></div></div>
+      <div class="account-wrap"><button class="account-btn" id="accountButton" type="button" aria-expanded="false" aria-controls="accountMenu"><span class="account-symbol">♙</span><span id="accountGreeting">Halo,<br>NineProjects</span>⌄</button><div class="account-menu" id="accountMenu" hidden><strong id="accountName">Memuat akun...</strong><small id="accountEmail"></small><small id="accountRoleLabel">Memeriksa hak akses...</small><a href="./index.html?view=admin">Kelola profil akun</a><a href="#adminProductPanel" id="manageProductsLink" hidden>Kelola produk</a><button id="logoutButton" type="button">Keluar dari akun</button></div></div>
     </div>
   </header>
   <nav class="market-nav" id="marketNav" aria-label="Navigasi toko">
@@ -397,7 +397,9 @@ async function loadAccount(){
   $('accountName').textContent=displayName;
   $('accountEmail').textContent=user.email||'';
   $('accountGreeting').innerHTML='Halo,<br>'+escapeHTML(displayName);
-  $('manageProductsLink').hidden = profile?.role !== 'admin';
+  const adminAccess = isAdminAccount();
+  $('accountRoleLabel').textContent = adminAccess ? 'Akses Admin aktif' : 'Akses Pengguna';
+  $('manageProductsLink').hidden = !adminAccess;
 }
 async function loadCartFromDatabase(){
   const {data,error}=await supabase.from('cart_items').select('product_id,quantity').eq('user_id',currentUser.id);
@@ -416,6 +418,7 @@ async function saveCartQuantity(productId,quantity){
     if(error)throw error;
   }
 }
+function isAdminAccount(){return String(currentProfile?.role||'').trim().toLowerCase()==='admin';}
 function closeAccountMenu(){ $('accountMenu').hidden=true;$('accountButton').setAttribute('aria-expanded','false'); }
 
 function setProductNotice(message){const el=$('productAdminNotice');el.textContent=message;el.hidden=!message;}
@@ -425,11 +428,11 @@ function resetProductForm(){
   $('clearProductImage').checked=false;$('saveProductButton').textContent='Simpan produk';setProductNotice('');
 }
 function renderAdminProductList(){
-  if(currentProfile?.role!=='admin') return;
+  if(!isAdminAccount()) return;
   $('adminProductList').innerHTML=products.length?products.map(p=>`<div class="admin-product-row"><div class="admin-product-thumb">${productArtwork(p)}</div><div class="admin-product-meta"><strong>${escapeHTML(p.name)}</strong><small>${escapeHTML(p.category)} · ${formatIDR(p.price)} · Stok ${Number(p.stock)||0}</small><span class="admin-status">${p.active?'Ditampilkan di katalog':'Disembunyikan'}</span></div><div class="admin-product-actions"><button class="admin-edit" type="button" data-edit-product="${p.id}">Edit</button><button class="admin-hide" type="button" data-toggle-product="${p.id}">${p.active?'Sembunyikan':'Tampilkan'}</button></div></div>`).join(''):'<p class="admin-help">Belum ada produk. Gunakan formulir di atas untuk menambahkan produk pertama.</p>';
 }
 function openProductAdmin(){
-  if(currentProfile?.role!=='admin'){showToast('Menu ini hanya untuk akun Admin.');return;}
+  if(!isAdminAccount()){showToast('Akun ini belum memiliki role admin di tabel profiles.');return;}
   $('adminProductPanel').hidden=false;renderAdminProductList();$('adminProductPanel').scrollIntoView({behavior:'smooth',block:'start'});closeAccountMenu();
 }
 function fillProductForm(id){
@@ -458,7 +461,7 @@ function productImagePath(url){
 async function removeProductImage(url){const path=productImagePath(url);if(path){const {error}=await supabase.storage.from('product-images').remove([path]);if(error)console.warn('Foto lama tidak dapat dihapus:',error.message);}}
 async function saveProduct(event){
   event.preventDefault();
-  if(currentProfile?.role!=='admin')return showToast('Akses Admin diperlukan.');
+  if(!isAdminAccount())return showToast('Akun ini belum memiliki role admin di tabel profiles.');
   const id=$('productId').value?Number($('productId').value):null;
   const previous=id?products.find(p=>p.id===id):null;
   const payload={
@@ -488,7 +491,7 @@ async function saveProduct(event){
   }finally{button.disabled=false;if($('productId').value)button.textContent='Simpan perubahan';else button.textContent='Simpan produk';}
 }
 async function toggleProductActive(id){
-  if(currentProfile?.role!=='admin')return;
+  if(!isAdminAccount())return;
   const p=products.find(item=>item.id===Number(id));if(!p)return;
   const {error}=await supabase.from('products').update({active:!p.active}).eq('id',p.id);
   if(error){showToast('Gagal mengubah status: '+error.message);return;}
@@ -505,7 +508,7 @@ async function initializeStore(){
     await loadCartFromDatabase();
     storeReady=true;
     renderCart();
-    if(currentProfile?.role==='admin') renderAdminProductList();
+    if(isAdminAccount()) renderAdminProductList();
   }catch(error){
     console.error('NineProjects Market initialization:',error);
     showToast('Tidak bisa memuat akun/keranjang: '+friendlyDbError(error));
