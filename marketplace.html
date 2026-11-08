@@ -60,7 +60,7 @@ button { cursor: pointer; }
 .account-menu small { color: #aab8d2; font-size: 11px; margin-bottom: 12px; }
 .account-menu a, .account-menu button { display: block; width: 100%; padding: 10px 11px; border: 1px solid #2b3b58; border-radius: 9px; color: #eef3ff; background: #142842; text-align: left; text-decoration: none; font-size: 12px; margin-top: 7px; }
 /* Jangan biarkan display:block pada link mengalahkan atribut hidden. */
-.account-menu a[hidden], .account-menu button[hidden], #adminProductPanel[hidden] { display: none !important; }
+.account-menu a[hidden], .account-menu button[hidden], #adminProductPanel[hidden], #adminPaymentPanel[hidden] { display: none !important; }
 .account-menu button { background: #39232a; border-color: #70404c; color: #ffdce2; }
 .market-nav { max-width: 1480px; margin: 0 auto; padding: 0 22px; min-height: 62px; display: flex; align-items: center; gap: 30px; border-bottom: 1px solid #17283d; }
 .market-nav button { height: 62px; padding: 0 2px; color: #c8d3e2; background: transparent; border: 0; border-bottom: 3px solid transparent; font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif; font-size: 14px; font-weight: 650; letter-spacing: -.012em; white-space: nowrap; }
@@ -250,7 +250,7 @@ h1, h2, h3 { font-family: var(--site-font-heading); letter-spacing: -.045em; }
     <div class="search"><input id="searchInput" type="search" placeholder="Cari produk branded..." aria-label="Cari produk"><button class="search-submit" id="searchButton" type="button" aria-label="Cari">⌕</button></div>
     <div class="actions">
       <button class="cart-btn" id="openCart" type="button">♧ Keranjang <span class="cart-count" id="cartCount">0</span></button>
-      <div class="account-wrap"><button class="account-btn" id="accountButton" type="button" aria-expanded="false" aria-controls="accountMenu"><span class="account-symbol">♙</span><span id="accountGreeting">Halo,<br>NineProjects</span>⌄</button><div class="account-menu" id="accountMenu" hidden><strong id="accountName">Memuat akun...</strong><small id="accountEmail"></small><small id="accountRoleLabel">Memeriksa hak akses...</small><a href="./index.html?view=admin">Kelola profil akun</a><a href="#adminProductPanel" id="manageProductsLink" hidden>Kelola produk</a><button id="logoutButton" type="button">Keluar dari akun</button></div></div>
+      <div class="account-wrap"><button class="account-btn" id="accountButton" type="button" aria-expanded="false" aria-controls="accountMenu"><span class="account-symbol">♙</span><span id="accountGreeting">Halo,<br>NineProjects</span>⌄</button><div class="account-menu" id="accountMenu" hidden><strong id="accountName">Memuat akun...</strong><small id="accountEmail"></small><small id="accountRoleLabel">Memeriksa hak akses...</small><a href="./index.html?view=admin">Kelola profil akun</a><a href="#adminProductPanel" id="manageProductsLink" hidden>Kelola produk</a><a href="#adminPaymentPanel" id="adminPaymentsLink" hidden>Konfirmasi pembayaran</a><button id="logoutButton" type="button">Keluar dari akun</button></div></div>
     </div>
   </header>
   <nav class="market-nav" id="marketNav" aria-label="Navigasi toko">
@@ -305,6 +305,12 @@ h1, h2, h3 { font-family: var(--site-font-heading); letter-spacing: -.045em; }
       <div class="admin-product-list" id="adminProductList"><p class="admin-help">Memuat produk...</p></div>
       <p class="admin-footnote">Produk yang disembunyikan tidak tampil di katalog, tetapi datanya tetap tersimpan. Untuk produk baru, pastikan stok diisi sebelum ditampilkan ke pembeli.</p>
     </section>
+    <section class="admin-products" id="adminPaymentPanel" hidden aria-labelledby="adminPaymentTitle">
+      <div class="section-head"><div><p class="eyebrow">AKSES KHUSUS ADMIN</p><h2 id="adminPaymentTitle">Konfirmasi Pembayaran QRIS</h2></div><button class="admin-close" id="closePaymentAdmin" type="button">Tutup</button></div>
+      <p class="admin-help">Pesanan QRIS yang menunggu pemeriksaan akan muncul di sini. Periksa konfirmasi pembayaran di luar website sebelum menekan tombol konfirmasi. Untuk presentasi, status dapat dikonfirmasi secara manual oleh Admin.</p>
+      <div class="admin-list-head"><h3>Menunggu konfirmasi</h3><button class="admin-cancel" id="refreshPendingPayments" type="button">Muat ulang</button></div>
+      <div class="admin-product-list" id="pendingPaymentList"><p class="admin-help">Memuat pesanan...</p></div>
+    </section>
     <section id="catalog" aria-labelledby="catalogTitle">
       <div class="section-head"><div><h2 id="catalogTitle">Produk Terbaru</h2></div><p id="catalogSubtitle">Pilihan terbaru dari NineProjects Market</p></div>
       <div class="catalog-toolbar"><p id="productCount">Menampilkan produk</p><label><span class="sr-only">Urutkan produk</span><select id="sortSelect" aria-label="Urutkan produk"><option value="featured">Pilihan kami</option><option value="price-low">Harga terendah</option><option value="price-high">Harga tertinggi</option></select></label></div>
@@ -337,10 +343,10 @@ h1, h2, h3 { font-family: var(--site-font-heading); letter-spacing: -.045em; }
               </div>
             </div>
             <div class="summary-row total"><span>Total pembayaran</span><strong id="checkoutTotal">Rp0</strong></div>
-            <div class="demo-note">Mode presentasi: QRIS merupakan simulasi. Tidak ada uang sungguhan yang diproses. Jika QRIS dipilih, status pesanan akan otomatis menjadi Lunas (Simulasi).</div>
+            <div class="demo-note">QRIS menampilkan kode referensi pesanan. Status pembayaran menunggu pemeriksaan dan konfirmasi Admin.</div>
             <button class="primary-btn" type="submit">Konfirmasi pesanan</button>
           </div>
-          <div class="order-success" id="orderSuccess"><div class="success-icon">✓</div><h3 id="successTitle">Konfirmasi berhasil!</h3><p id="successMessage">Ringkasan pesanan telah dibuat.</p><div class="qris-demo-box" id="qrisDemoBox" hidden><small>NINEPROJECTS MARKET · QRIS DEMO</small><img id="qrisDemoImage" alt="QR Code simulasi NineProjects"><strong id="qrisDemoAmount">Rp0</strong><span class="qris-demo-label">SIMULASI — BUKAN PEMBAYARAN AKTIF</span><small style="margin-top:8px">QR ini hanya berisi kode referensi pesanan untuk keperluan demonstrasi, bukan QRIS merchant.</small></div><div class="order-id" id="orderId">NP-00001</div><p id="successSummary"></p><button class="primary-btn" id="finishOrder" type="button">Kembali belanja</button></div>
+          <div class="order-success" id="orderSuccess"><div class="success-icon">✓</div><h3 id="successTitle">Konfirmasi berhasil!</h3><p id="successMessage">Ringkasan pesanan telah dibuat.</p><div class="qris-demo-box" id="qrisDemoBox" hidden><small>NINEPROJECTS MARKET · QRIS · REFERENSI PESANAN</small><img id="qrisDemoImage" alt="QR referensi pesanan NineProjects"><strong id="qrisDemoAmount">Rp0</strong><span class="qris-demo-label">MENUNGGU KONFIRMASI ADMIN</span><small style="margin-top:8px">Kode ini hanya referensi pesanan, bukan QRIS aktif untuk menerima pembayaran.</small></div><div class="order-id" id="orderId">NP-00001</div><p id="successSummary"></p><button class="primary-btn" id="finishOrder" type="button">Kembali belanja</button></div>
         </form>
       </div>
     </div>
@@ -409,7 +415,13 @@ async function loadAccount(){
   const manageLink = $('manageProductsLink');
   manageLink.hidden = !adminAccess;
   manageLink.style.removeProperty('display');
-  if (!adminAccess) $('adminProductPanel').hidden = true;
+  const paymentLink = $('adminPaymentsLink');
+  paymentLink.hidden = !adminAccess;
+  paymentLink.style.removeProperty('display');
+  if (!adminAccess) {
+    $('adminProductPanel').hidden = true;
+    $('adminPaymentPanel').hidden = true;
+  }
 }
 async function loadCartFromDatabase(){
   const {data,error}=await supabase.from('cart_items').select('product_id,quantity').eq('user_id',currentUser.id);
@@ -440,6 +452,23 @@ function resetProductForm(){
 function renderAdminProductList(){
   if(!isAdminAccount()) return;
   $('adminProductList').innerHTML=products.length?products.map(p=>`<div class="admin-product-row"><div class="admin-product-thumb">${productArtwork(p)}</div><div class="admin-product-meta"><strong>${escapeHTML(p.name)}</strong><small>${escapeHTML(p.category)} · ${formatIDR(p.price)} · Stok ${Number(p.stock)||0}</small><span class="admin-status">${p.active?'Ditampilkan di katalog':'Disembunyikan'}</span></div><div class="admin-product-actions"><button class="admin-edit" type="button" data-edit-product="${p.id}">Edit</button><button class="admin-hide" type="button" data-toggle-product="${p.id}">${p.active?'Sembunyikan':'Tampilkan'}</button></div></div>`).join(''):'<p class="admin-help">Belum ada produk. Gunakan formulir di atas untuk menambahkan produk pertama.</p>';
+}
+function escapeAttr(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
+async function loadPendingQrisPayments(){
+  if(!isAdminAccount()) return;
+  const list=$('pendingPaymentList');
+  list.innerHTML='<p class="admin-help">Memuat pesanan...</p>';
+  const {data,error}=await supabase.rpc('admin_list_pending_qris_orders');
+  if(error) throw error;
+  const rows=data||[];
+  list.innerHTML=rows.length?rows.map(order=>`<div class="admin-product-row"><div class="admin-product-meta"><strong>${escapeHTML(order.order_code)}</strong><small>${escapeHTML(order.buyer_name)} · ${escapeHTML(order.buyer_phone)}</small><small>${escapeHTML(order.buyer_address)}</small><span class="admin-status">${formatIDR(order.total_amount)} · QRIS · Menunggu konfirmasi</span></div><div class="admin-product-actions"><button class="admin-edit" type="button" data-confirm-qris="${escapeAttr(order.order_code)}">Konfirmasi dibayar</button></div></div>`).join(''):'<p class="admin-help">Tidak ada pesanan QRIS yang menunggu konfirmasi.</p>';
+}
+async function openPaymentAdmin(){
+  if(!isAdminAccount()){showToast('Menu konfirmasi pembayaran hanya tersedia untuk Admin.');return;}
+  $('adminPaymentPanel').hidden=false;
+  $('adminPaymentPanel').scrollIntoView({behavior:'smooth',block:'start'});
+  closeAccountMenu();
+  try{await loadPendingQrisPayments();}catch(error){$('pendingPaymentList').innerHTML=`<p class="admin-help">Gagal memuat pesanan: ${escapeHTML(error.message)}</p>`;}
 }
 function openProductAdmin(){
   if(!isAdminAccount()){showToast('Akun ini belum memiliki role admin di tabel profiles.');return;}
@@ -572,14 +601,14 @@ $('checkoutForm').addEventListener('submit',async e=>{
     const savedCode=orderResult?.order_code||orderCode;
     const isQrisDemo=payment==='QRIS';
     $('orderId').textContent=savedCode;
-    $('successTitle').textContent=isQrisDemo?'Pembayaran simulasi berhasil!':'Pesanan berhasil dibuat!';
-    $('successMessage').textContent=isQrisDemo?'QR Code ditampilkan sebagai bukti visual simulasi. Status pesanan otomatis menjadi Lunas (Simulasi).':'Pesanan tersimpan. Silakan ikuti metode pembayaran yang dipilih.';
+    $('successTitle').textContent=isQrisDemo?'Menunggu konfirmasi pembayaran':'Pesanan berhasil dibuat!';
+    $('successMessage').textContent=isQrisDemo?'QR referensi pesanan telah dibuat. Status akan berubah menjadi berhasil setelah Admin melakukan konfirmasi.':'Pesanan tersimpan. Silakan ikuti metode pembayaran yang dipilih.';
     $('qrisDemoBox').hidden=!isQrisDemo;
     if(isQrisDemo){
-      const demoPayload=`NINEPROJECTS-DEMO|ORDER:${savedCode}|AMOUNT:${savedTotal}|STATUS:SIMULATED`;
+      const demoPayload=`NINEPROJECTS-ORDER|ORDER:${savedCode}|AMOUNT:${savedTotal}|PAYMENT:QRIS|STATUS:PENDING`;
       $('qrisDemoImage').src=`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(demoPayload)}`;
       $('qrisDemoAmount').textContent=formatIDR(savedTotal);
-      $('successSummary').textContent=`Total ${formatIDR(savedTotal)} · Metode: QRIS · Status: Lunas (Simulasi). Tidak ada transaksi uang sungguhan.`;
+      $('successSummary').textContent=`Total ${formatIDR(savedTotal)} · Metode: QRIS · Status: Menunggu konfirmasi Admin.`;
     }else{
       $('successSummary').textContent=`Total ${formatIDR(savedTotal)} · Metode pembayaran: ${payment} · Status: Menunggu pembayaran.`;
     }
@@ -593,6 +622,23 @@ $('checkoutForm').addEventListener('submit',async e=>{
 });
         $('finishOrder').addEventListener('click',()=>{closeCheckout();$('checkoutForm').reset();$('checkoutFields').style.display='block';$('orderSuccess').classList.remove('open');showToast('Terima kasih telah berbelanja di NineProjects Market!');});
 $('manageProductsLink').addEventListener('click',e=>{e.preventDefault();if(!isAdminAccount()){e.currentTarget.hidden=true;showToast('Menu Kelola Produk hanya tersedia untuk Admin.');return;}openProductAdmin();});
+$('adminPaymentsLink').addEventListener('click',e=>{e.preventDefault();if(!isAdminAccount()){e.currentTarget.hidden=true;showToast('Menu konfirmasi pembayaran hanya tersedia untuk Admin.');return;}openPaymentAdmin();});
+$('closePaymentAdmin').addEventListener('click',()=>{$('adminPaymentPanel').hidden=true;});
+$('refreshPendingPayments').addEventListener('click',async()=>{try{await loadPendingQrisPayments();showToast('Daftar pembayaran diperbarui.');}catch(error){showToast('Gagal memuat pembayaran: '+error.message);}});
+$('pendingPaymentList').addEventListener('click',async e=>{
+  const button=e.target.closest('[data-confirm-qris]');
+  if(!button)return;
+  if(!isAdminAccount()){showToast('Akses Admin diperlukan.');return;}
+  const orderCode=button.dataset.confirmQris;
+  if(!window.confirm('Konfirmasi bahwa pembayaran untuk pesanan '+orderCode+' sudah diperiksa?'))return;
+  button.disabled=true;button.textContent='Memproses...';
+  try{
+    const {data,error}=await supabase.rpc('admin_confirm_qris_payment',{p_order_code:orderCode});
+    if(error)throw error;
+    showToast('Status pembayaran berhasil diperbarui.');
+    await loadPendingQrisPayments();
+  }catch(error){button.disabled=false;button.textContent='Konfirmasi dibayar';showToast('Konfirmasi gagal: '+friendlyDbError(error));}
+});
 $('closeProductAdmin').addEventListener('click',()=>{$('adminProductPanel').hidden=true;});
 $('productForm').addEventListener('submit',saveProduct);
 $('resetProductForm').addEventListener('click',resetProductForm);
