@@ -403,7 +403,7 @@ async function loadAccount(){
   $('accountRoleLabel').textContent = adminAccess ? 'Akses Admin aktif' : 'Akses Pengguna';
   const manageLink = $('manageProductsLink');
   manageLink.hidden = !adminAccess;
-  manageLink.style.display = adminAccess ? 'block' : 'none';
+  manageLink.style.removeProperty('display');
   if (!adminAccess) $('adminProductPanel').hidden = true;
 }
 async function loadCartFromDatabase(){
@@ -574,7 +574,7 @@ $('checkoutForm').addEventListener('submit',async e=>{
   }
 });
         $('finishOrder').addEventListener('click',()=>{closeCheckout();$('checkoutForm').reset();$('checkoutFields').style.display='block';$('orderSuccess').classList.remove('open');showToast('Terima kasih telah berbelanja di NineProjects Market!');});
-$('manageProductsLink').addEventListener('click',e=>{e.preventDefault();openProductAdmin();});
+$('manageProductsLink').addEventListener('click',e=>{e.preventDefault();if(!isAdminAccount()){e.currentTarget.hidden=true;showToast('Menu Kelola Produk hanya tersedia untuk Admin.');return;}openProductAdmin();});
 $('closeProductAdmin').addEventListener('click',()=>{$('adminProductPanel').hidden=true;});
 $('productForm').addEventListener('submit',saveProduct);
 $('resetProductForm').addEventListener('click',resetProductForm);
